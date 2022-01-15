@@ -1,7 +1,9 @@
 #ifndef __DOUBLE_LINKED_LIST
 #define __DOUBLE_LINKED_LIST
 
-//  DoubleLinkedList.h - Дважды связный список целых чисел  
+#include <ostream>
+
+//  DoubleLinkedList.h - Дважды связный список целых чисел
 //
 class DoubleLinkedList
 {
@@ -21,7 +23,7 @@ private:
     int count_;         // счетчик числа элементов
     Node* head_;        // первый элемент списка
     Node* tail_;        // последний элемент списка
-
+    
   // Доступ к головному узлу списка
     Node* head() const { return head_; }
 
@@ -34,25 +36,29 @@ private:
     // Вставить сформированный узел в начало списка
     void insertHead(Node* x); // (int item);
 
-  // Удаление заданного узла 
+  // Удаление заданного узла
     void deleteNode(Node* x);
 
-    // Поиск узла (адрес) с заданным значением  
-    Node* searchNode(int item);
+    // Поиск узла (адрес) с заданным значением
+    int searchNode(int item);
 
-    // Замена информации узла на новое 
+    // Замена информации узла на новое
     Node* replaceNode(Node* x, int item);
+
+    DoubleLinkedList::Node* getSetNode(int index) ;
 
 public:
 
     // Конструктор "по умолчанию" - создание пустого списка
     DoubleLinkedList() : count_(0), head_(nullptr), tail_(nullptr) {  }
 
+    DoubleLinkedList( DoubleLinkedList&& src)  ;
+
     // Конструктор "копирования" – создание копии имеющегося списка
     DoubleLinkedList(const DoubleLinkedList& src);
 
     // количество элементов списка
-    int сount()const { return count_; }
+    int count()const { return count_; }
 
     // Доступ к информации головного узла списка
     int headItem() const;
@@ -74,20 +80,30 @@ public:
     // Удалить элемент из хвоста списка
     bool deleteTail();
 
-    // Удаление узла с заданным значением  
+    // Удаление узла с заданным значением
     bool deleteItem(const int item);
 
-    // Поиск записи с заданным значением  
-    bool searchItem(int item);
+    // Поиск записи с заданным значением
+    int searchItem(int item);
 
-    // Замена информации узла на новое 
+    // Замена информации узла на новое
     bool replaceItem(int itemOld, int itemNew);
 
-    // Вывод элементов списка в текстовом виде в стандартный выходной поток 
-    void outAll();
+    // Вывод элементов списка в текстовом виде в стандартный выходной поток
 
-    // Деструктор списка	
+
+    int& operator[](int index) const;
+    // Деструктор списка
     virtual ~DoubleLinkedList();
+
+    friend std::ostream &operator<<(std::ostream &os, const DoubleLinkedList &list);
+
+    DoubleLinkedList& operator=(const DoubleLinkedList& rhs);
+
+    DoubleLinkedList& operator=( DoubleLinkedList&& list);
+
+    void swap(const DoubleLinkedList &rhs);
+
 };
 #endif
 
